@@ -74,6 +74,4 @@ CubeShifter/Plugins/*/Intermediate/*
 CubeShifter/DerivedDataCache/*
 
 # Ignore Obsidian Json Files
-Cube-Shifter-Notes/.obsidian/*.json
-Cube-Shifter-Notes/.obsidian/plugins
-Cube-Shifter-Notes/.obsidian/themes
+/Cube-Shifter-Notes/.obsidian
