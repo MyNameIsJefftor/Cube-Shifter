@@ -15,15 +15,20 @@ class CUBESHIFTER_API ASlideCube : public AShiftable
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		UStaticMeshComponent* Body;
+	UPROPERTY(VisibleAnywhere, Category = Parent)
+		USceneComponent* parent;
 
-	UPROPERTY(EditAnywhere, Category = Target)
-		UMoveMarker* MyTarget;
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		UStaticMeshComponent* WhiteCube;
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		UStaticMeshComponent* BlackCube;
+
+	//UPROPERTY(EditAnywhere, Category = Target)
+	//	UMoveMarker* MyTarget;
 
 	FVector Start;
 
-	bool AtStart = true;
+	bool IsWhite = true;
 	ASlideCube();
 
 	void Shift() override;
@@ -31,5 +36,9 @@ class CUBESHIFTER_API ASlideCube : public AShiftable
 protected:
 	void BeginPlay() {
 		Start = this->GetTransform().GetLocation();
+		disable(BlackCube);
 	}
+private:
+	void disable(UStaticMeshComponent* mesh);
+	void enable(UStaticMeshComponent* mesh);
 };

@@ -70,9 +70,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		FVector GunOffset;
 
-	UPROPERTY(EditAnywhere, Category = UnrealSucks)
-		float speed;
-
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ACubeShifterProjectile> ProjectileClass;

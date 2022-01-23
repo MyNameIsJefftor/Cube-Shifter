@@ -5,20 +5,43 @@
 
 ASlideCube::ASlideCube()
 {
-	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Cube"));
-	MyTarget = CreateDefaultSubobject<UMoveMarker>(TEXT("Target"));
+	parent = CreateDefaultSubobject<USceneComponent>(TEXT("Parent"));
+	RootComponent = parent;
+
+	WhiteCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WhiteCube"));
+	WhiteCube->AttachTo(parent);
+
+	BlackCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BlackCube"));
+	BlackCube->AttachTo(parent);
+
+	//MyTarget = CreateDefaultSubobject<UMoveMarker>(TEXT("Target"));
 }
 
 void ASlideCube::Shift()
 {
-	AtStart = !AtStart;
-	switch (AtStart) {
+	switch (IsWhite) {
 	case true:
-		Body->SetWorldLocation(MyTarget->GetComponentLocation());
+		disable(WhiteCube);
+		enable(BlackCube);
 		break;
 	case false:
-		Body->SetWorldLocation(Start);
+		disable(BlackCube);
+		enable(WhiteCube);
 		break;
 	}
+	IsWhite = !IsWhite;
 	return;
 }
+
+void ASlideCube::disable(UStaticMeshComponent* mesh)
+{
+	mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	mesh->SetVisibility(false);
+}
+
+void ASlideCube::enable(UStaticMeshComponent* mesh)
+{
+	mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	mesh->SetVisibility(true);
+}
+
