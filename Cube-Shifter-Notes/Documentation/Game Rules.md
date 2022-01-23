@@ -8,8 +8,10 @@
 ## Ruleset 2
 - [ ] Positive/Negative orb gives Positive/Negative functionality to one object
 	- object example: Stairs change from stairs to flat angled surface
-- [ ] Master Shifter shifts all objects in the world
-- [ ] Can shoot both Positive and negative orbs 
+- [ ] Shifting causes Objects from one world to shift to the other. 
+	- IE if in the negative world positive objects won't shift when you do.
+- [ ] Can shoot both Positive and negative orbs
+- [ ] You can only control one object at a time. 
 
 ## Ruleset 3
 - Idk
