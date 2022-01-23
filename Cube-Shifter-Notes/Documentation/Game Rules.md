@@ -5,7 +5,7 @@
 - [ ] Sending Positive/Negative object(s) to Negative/Positive world
 - [ ] Master Shifter only shifts the Player
 
-## Ruleset 2
+%%## Ruleset 2
 - [ ] Positive/Negative orb gives Positive/Negative functionality to one object
 	- object example: Stairs change from stairs to flat angled surface
 - [ ] Shifting causes Objects from one world to shift to the other. 
@@ -14,7 +14,7 @@
 - [ ] You can only control one object at a time. 
 
 ## Ruleset 3
-- Idk
+- Idk%%
 
 %%- White/black projectile gives white/black functionality to object 
 - they make a white/black object function as a black/white object, but only one of each at a time (shift cube excluded maybe) 
