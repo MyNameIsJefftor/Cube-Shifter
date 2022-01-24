@@ -39,10 +39,14 @@ public:
 	UFUNCTION()
 	void OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+	virtual void Shift() override;
+
 protected:
 	virtual void BeginPlay();
 
 private:
-	UMaterialInterface* Material;
+	//UMaterialInterface* Material;
+	UMaterialInstanceDynamic* DynamicPPMat;
+	UMaterialInstanceDynamic* DynamicMat;
 
 };
