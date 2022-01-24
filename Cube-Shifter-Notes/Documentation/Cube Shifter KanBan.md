@@ -6,12 +6,12 @@ kanban-plugin: basic
 
 ## Todo
 
-- [ ] - [ ] invert master shifter when in opposite world
-- [ ] - [ ] Make master shifter only shift with contact orbs (i.e. making it a shiftable)
+- [ ] - [x] invert master shifter when in opposite world
+- [ ] - [x] Make master shifter only shift with contact orbs (i.e. making it a shiftable)
+- [ ] - [x] change master shifter to new mesh
 - [ ] - [ ] Make more shiftable objects
-- [ ] - [ ] change master shifter to new mesh
-- [ ] - [ ] Add Blockout tools plugin maybe
 - [ ] - [ ] Add anti-aliasing
+- [ ] - [ ] Add Blockout tools plugin maybe
 
 
 ## Player
