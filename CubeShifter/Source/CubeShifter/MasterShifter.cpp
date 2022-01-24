@@ -6,13 +6,16 @@
 #include "Components/PostProcessComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Components/BoxComponent.h"
+#include "GameFramework/RotatingMovementComponent.h"
 //#include "Kismet/GameplayStatics.h"
 
 AMasterShifter::AMasterShifter()
 {
+	PrimaryActorTick.bCanEverTick = true;
+
 	CollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
 	CollisionComp->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
-	CollisionComp->OnComponentHit.AddDynamic(this, &AMasterShifter::OnCompHit);
+	//CollisionComp->OnComponentHit.AddDynamic(this, &AMasterShifter::OnCompHit);
 	CollisionComp->SetBoxExtent(FVector(1.0f, 1.0f, 1.0f));
 	RootComponent = CollisionComp;
 
@@ -25,109 +28,21 @@ AMasterShifter::AMasterShifter()
 	PostProcessComp->SetupAttachment(CollisionComp);
 	PostProcessComp->bUnbound = true;
 
+	RotatingMovementComp = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("RotatingMovement"));
+	RotatingMovementComp->SetUpdatedComponent(CollisionComp);
+	RotatingMovementComp->RotationRate = FRotator(45.0f, 90.0f, 90.0f);
+
 	DynamicMat = nullptr;
 	DynamicPPMat = nullptr;
 }
 
-UStaticMeshComponent* AMasterShifter::GetMeshComp() const
-{
-	return this->MeshComp;
-}
-
-UBoxComponent* AMasterShifter::GetBoxComp() const
-{
-	return CollisionComp;
-}
-
-UPostProcessComponent* AMasterShifter::GetPostProcessComp() const
-{
-	return this->PostProcessComp;
-}
-
-void AMasterShifter::OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-	//if (false/*(OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics()*/)
-	//{
-	//	// Get post process material
-	//	UMaterialInterface* Material = Cast<UMaterialInterface>(PostProcessComp->Settings.WeightedBlendables.Array[0].Object);
-	//	if (Material)
-	//	{
-	//		// Make new Dynamic Material instance for Post Process material
-	//		UMaterialInstanceDynamic* dynMat = UMaterialInstanceDynamic::Create(Material, this);
-
-	//		FWeightedBlendable newWeightedBlendable;
-	//		newWeightedBlendable.Object = dynMat;
-	//		newWeightedBlendable.Weight = 1;
-
-	//		PostProcessComp->Settings.WeightedBlendables.Array.Add(newWeightedBlendable);
-
-	//		FLinearColor faceColor;
-	//		dynMat->GetVectorParameterValue(TEXT("Face Color"), faceColor);
-	//		FLinearColor lineColor;
-	//		dynMat->GetVectorParameterValue(TEXT("Line Color"), lineColor);
-
-	//		const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
-	//		const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
-
-	//		// if face is white and line is black
-	//		if (faceColor.R > 0.5f && lineColor.R < 0.5f)
-	//		{
-	//			// Change face to Black
-	//			dynMat->SetVectorParameterValue(TEXT("Face Color"), Black);
-	//			// Change Line to White
-	//			dynMat->SetVectorParameterValue(TEXT("Line Color"), White);
-
-	//			PositiveState = false;
-	//		}
-	//		else
-	//		{
-	//			// Change face to White
-	//			dynMat->SetVectorParameterValue(TEXT("Face Color"), White);
-	//			// Change Line to Black
-	//			dynMat->SetVectorParameterValue(TEXT("Line Color"), Black);
-
-	//			PositiveState = true;
-	//		}
-	//	}
-
-	//	// Get Material for Orb in Mesh
-	//	Material = MeshComp->GetMaterial(1);
-	//	if (Material)
-	//	{
-	//		// Make new Dynamic Material instance for Mesh material
-	//		UMaterialInstanceDynamic* dynMat = UMaterialInstanceDynamic::Create(Material, this);
-
-	//		FLinearColor faceColor;
-	//		dynMat->GetVectorParameterValue(TEXT("Face Color"), faceColor);
-	//		//FLinearColor lineColor;
-	//		//dynMat->GetVectorParameterValue(TEXT("Line Color"), lineColor);
-
-	//		const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
-	//		const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
-
-	//		// if face is white
-	//		if (faceColor.R > 0.5f/* && lineColor.R < 0.5f*/)
-	//		{
-	//			// Change face to Black
-	//			dynMat->SetVectorParameterValue(TEXT("DiffuseColor"), Black);
-	//			// Change Line to White
-	//			//dynMat->SetVectorParameterValue(TEXT("Line Color"), White);
-
-	//			PositiveState = true;
-	//		}
-	//		else
-	//		{
-	//			// Change face to White
-	//			dynMat->SetVectorParameterValue(TEXT("DiffuseColor"), White);
-	//			// Change Line to Black
-	//			//dynMat->SetVectorParameterValue(TEXT("Line Color"), Black);
-
-	//			PositiveState = false;
-	//		}
-	//	}
-
-	//}
-}
+//void AMasterShifter::OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+//{
+//	//if (false/*(OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics()*/)
+//	//{
+//
+//	//}
+//}
 
 void AMasterShifter::Shift()
 {
@@ -206,5 +121,14 @@ void AMasterShifter::Shift()
 
 void AMasterShifter::BeginPlay()
 {
+	Super::BeginPlay();
+
 	if (!PositiveState) Shift();
+}
+
+void AMasterShifter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	//AddActorLocalRotation(FRotator(45.0f, 90.0f, 90.0f) * DeltaTime);
 }

@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class UPostProcessComponent;
 class UBoxComponent;
+class URotatingMovementComponent;
 
 UCLASS()
 class CUBESHIFTER_API AMasterShifter : public AShiftable
@@ -27,22 +28,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Post Process")
 	UPostProcessComponent* PostProcessComp;
 
-	UFUNCTION(BlueprintCallable)
-	UStaticMeshComponent* GetMeshComp() const;
+	UPROPERTY(EditAnywhere, Category = "Rotating Movement")
+	URotatingMovementComponent* RotatingMovementComp;
 
-	UFUNCTION(BlueprintCallable)
-	UBoxComponent* GetBoxComp() const;
-
-	UFUNCTION(BlueprintCallable)
-	UPostProcessComponent* GetPostProcessComp() const;
-
-	UFUNCTION()
-	void OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	//UFUNCTION()
+	//void OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	virtual void Shift() override;
 
 protected:
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
 
 private:
 	//UMaterialInterface* Material;
