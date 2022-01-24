@@ -12,14 +12,14 @@ class CUBESHIFTER_API AShiftable : public AActor
 	GENERATED_BODY()
 
 protected:
-
-	bool WhiteState = false;
+	bool PositiveState = false;
 
 public:	
-
 	// Sets default values for this actor's properties
 	AShiftable();
 	AShiftable(bool StartState);
 
 	void virtual Shift();
+
+
 };
