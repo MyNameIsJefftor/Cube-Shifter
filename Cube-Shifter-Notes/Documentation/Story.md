@@ -1,0 +1,1 @@
+The positive and negative realms are starting to overlap and bleed into eachother%%This could explain the "ghost" of the object after shifting it%%. The players goal is to fix this problem so that they are no longer overlaping. 
