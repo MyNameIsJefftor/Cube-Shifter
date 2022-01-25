@@ -21,5 +21,5 @@ public:
 
 	void virtual Shift();
 
-
+	void virtual WorldStateChange(bool posState) { return; };
 };
