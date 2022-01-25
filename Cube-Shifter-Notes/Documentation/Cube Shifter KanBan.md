@@ -7,7 +7,6 @@ kanban-plugin: basic
 ## Todo
 
 - [ ] - [ ] Implement Reality Shifting<br>	- [[Game Rules]]<br>#HIGHPriority
-- [ ] - [ ] Projectile Changes Color Based on world
 - [ ] - [ ] Make more shiftable objects
 - [ ] - [ ] Add Blockout tools plugin maybe
 
@@ -31,6 +30,7 @@ kanban-plugin: basic
 - [ ] - [ ] Warping effect when an object shift realities
 - [ ] - [ ] Wave effect when player shifts
 - [ ] - [ ] "Ghost" of object in opposite realm
+- [ ] - [ ] Projectile Changes Color Based on world
 
 
 ## Interactables
