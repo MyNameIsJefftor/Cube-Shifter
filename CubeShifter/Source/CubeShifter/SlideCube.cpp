@@ -8,29 +8,35 @@ ASlideCube::ASlideCube()
 	parent = CreateDefaultSubobject<USceneComponent>(TEXT("Parent"));
 	RootComponent = parent;
 
-	WhiteCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WhiteCube"));
-	WhiteCube->AttachTo(parent);
+	posCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("posCube"));
+	posCube->AttachTo(parent);
 
-	BlackCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BlackCube"));
-	BlackCube->AttachTo(parent);
+	negCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("negCube"));
+	negCube->AttachTo(parent);
 
 	//MyTarget = CreateDefaultSubobject<UMoveMarker>(TEXT("Target"));
 }
 
 void ASlideCube::Shift()
 {
-	switch (IsWhite) {
-	case true:
-		disable(WhiteCube);
-		enable(BlackCube);
-		break;
-	case false:
-		disable(BlackCube);
-		enable(WhiteCube);
-		break;
-	}
-	IsWhite = !IsWhite;
+	disable(posCube);
+	disable(negCube);
+	isPositve = !isPositve;
 	return;
+}
+
+void ASlideCube::WorldStateChange(bool worldState)
+{
+	if (worldState)
+		if (isPositve)
+			enable(posCube);
+		else
+			disable(negCube);
+	else
+		if (isPositve)
+			disable(posCube);
+		else
+			enable(negCube);
 }
 
 void ASlideCube::disable(UStaticMeshComponent* mesh)

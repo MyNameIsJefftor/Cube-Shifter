@@ -12,12 +12,15 @@ class CUBESHIFTER_API AShiftable : public AActor
 	GENERATED_BODY()
 
 protected:
-	bool PositiveState = false;
+	UPROPERTY(EditAnywhere, Category=PosNeg)
+		bool PositiveState;
 
 public:	
 	// Sets default values for this actor's properties
 	AShiftable();
 	AShiftable(bool StartState);
+
+	void BeginPlay() { if (!PositiveState) { Shift(); } };
 
 	bool GetPositiveState() const;
 

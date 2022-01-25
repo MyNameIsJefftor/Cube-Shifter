@@ -38,10 +38,10 @@ AMasterShifter::AMasterShifter()
 
 //void AMasterShifter::OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 //{
-//	//if (false/*(OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics()*/)
-//	//{
+//	if (false/*(OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics()*/)
+//	{
 //
-//	//}
+//	}
 //}
 
 void AMasterShifter::Shift()
@@ -117,16 +117,15 @@ void AMasterShifter::Shift()
 		PositiveState = false;
 	}
 
-	//TArray<AActor*> Shiftables;
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShiftable::StaticClass(), Shiftables);
-	//for (AActor* actor : Shiftables)
-	//{
-	//	// If shiftable is in Positive/Negative state disable it
-	//	// then shift any shiftables that are in same state as master shifter 
-	//	AShiftable* shiftable = Cast<AShiftable>(actor);
-	//	if (shiftable != this && shiftable->GetPositiveState() == PositiveState)
-	//		Cast<AShiftable>(actor)->Shift();
-	//}
+	TArray<AActor*> Shiftables;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShiftable::StaticClass(), Shiftables);
+	for (AActor* actor : Shiftables)
+	{
+		// If shiftable is in Positive/Negative state disable it
+		// then shift any shiftables that are in same state as master shifter 
+		AShiftable* shiftable = Cast<AShiftable>(actor);
+		shiftable->WorldStateChange(PositiveState);
+	}
 	
 }
 

@@ -19,26 +19,29 @@ class CUBESHIFTER_API ASlideCube : public AShiftable
 		USceneComponent* parent;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		UStaticMeshComponent* WhiteCube;
+		UStaticMeshComponent* posCube;
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		UStaticMeshComponent* BlackCube;
+		UStaticMeshComponent* negCube;
 
 	//UPROPERTY(EditAnywhere, Category = Target)
 	//	UMoveMarker* MyTarget;
 
 	FVector Start;
 
-	bool IsWhite = true;
+	bool isPositve = true;
 	ASlideCube();
 
 	void Shift() override;
+	void WorldStateChange(bool worldState) override;
 
 protected:
 	void BeginPlay() {
-		Start = this->GetTransform().GetLocation();
-		disable(BlackCube);
+		if (!PositiveState) { Shift(); }
+		else { disable(negCube); }
 	}
 private:
 	void disable(UStaticMeshComponent* mesh);
 	void enable(UStaticMeshComponent* mesh);
+
+public:
 };
