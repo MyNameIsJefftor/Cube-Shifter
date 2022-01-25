@@ -7,7 +7,7 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/RotatingMovementComponent.h"
-//#include "Kismet/GameplayStatics.h"
+#include "Kismet/GameplayStatics.h"
 
 AMasterShifter::AMasterShifter()
 {
@@ -116,6 +116,17 @@ void AMasterShifter::Shift()
 
 		PositiveState = false;
 	}
+
+	//TArray<AActor*> Shiftables;
+	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShiftable::StaticClass(), Shiftables);
+	//for (AActor* actor : Shiftables)
+	//{
+	//	// If shiftable is in Positive/Negative state disable it
+	//	// then shift any shiftables that are in same state as master shifter 
+	//	AShiftable* shiftable = Cast<AShiftable>(actor);
+	//	if (shiftable != this && shiftable->GetPositiveState() == PositiveState)
+	//		Cast<AShiftable>(actor)->Shift();
+	//}
 	
 }
 
