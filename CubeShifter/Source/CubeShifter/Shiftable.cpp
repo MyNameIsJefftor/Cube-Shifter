@@ -20,6 +20,11 @@ AShiftable::AShiftable(bool StartState)
 	PositiveState = StartState;
 }
 
+bool AShiftable::GetPositiveState() const
+{
+	return PositiveState;
+}
+
 void AShiftable::Shift()
 {
 	return;

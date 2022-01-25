@@ -19,6 +19,8 @@ public:
 	AShiftable();
 	AShiftable(bool StartState);
 
+	bool GetPositiveState() const;
+
 	void virtual Shift();
 
 
