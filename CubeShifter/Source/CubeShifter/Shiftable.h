@@ -13,18 +13,21 @@ class CUBESHIFTER_API AShiftable : public AActor
 
 protected:
 	UPROPERTY(EditAnywhere, Category=PosNeg)
-		bool PositiveState;
+	bool PositiveState;
 
 public:	
 	// Sets default values for this actor's properties
 	AShiftable();
 	AShiftable(bool StartState);
-
-	void BeginPlay() { if (!PositiveState) { Shift(); } };
+ 
+	void BeginPlay() override;
 
 	bool GetPositiveState() const;
 
 	void virtual Shift();
 
-	void virtual WorldStateChange(bool posState) { return; };
+	void virtual WorldStateChange(bool posState);
+
+	virtual bool Disable(USceneComponent* Component);
+	virtual bool Enable(USceneComponent* Component);
 };

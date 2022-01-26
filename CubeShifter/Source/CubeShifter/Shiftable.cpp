@@ -12,14 +12,19 @@ AShiftable::AShiftable()
 	PositiveState = true;
 }
 
-
-
 AShiftable::AShiftable(bool StartState)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
 	PositiveState = StartState;
+}
+
+void AShiftable::BeginPlay()
+{
+	Super::BeginPlay(); 
+
+	if (!PositiveState) Shift();
 }
 
 bool AShiftable::GetPositiveState() const
@@ -29,5 +34,19 @@ bool AShiftable::GetPositiveState() const
 
 void AShiftable::Shift()
 {
-	return;
+
+}
+
+void AShiftable::WorldStateChange(bool posState)
+{
+}
+
+bool AShiftable::Disable(USceneComponent* Component)
+{
+	return false;
+}
+
+bool AShiftable::Enable(USceneComponent* Component)
+{
+	return false;
 }
