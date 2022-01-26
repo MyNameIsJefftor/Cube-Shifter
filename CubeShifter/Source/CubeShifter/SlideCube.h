@@ -20,6 +20,7 @@ class CUBESHIFTER_API ASlideCube : public AShiftable
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		UStaticMeshComponent* posCube;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		UStaticMeshComponent* negCube;
 
@@ -29,19 +30,18 @@ class CUBESHIFTER_API ASlideCube : public AShiftable
 	FVector Start;
 
 	bool isPositve = true;
+
 	ASlideCube();
 
 	void Shift() override;
+
 	void WorldStateChange(bool worldState) override;
 
 protected:
-	void BeginPlay() {
-		if (!PositiveState) { Shift(); }
-		else { disable(negCube); }
-	}
-private:
-	void disable(UStaticMeshComponent* mesh);
-	void enable(UStaticMeshComponent* mesh);
+	void BeginPlay() override;
 
-public:
+private:
+	bool Disable(USceneComponent* mesh) override;
+	bool Enable(USceneComponent* mesh) override;
+
 };

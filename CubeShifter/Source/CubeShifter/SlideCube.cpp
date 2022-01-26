@@ -9,18 +9,18 @@ ASlideCube::ASlideCube()
 	RootComponent = parent;
 
 	posCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("posCube"));
-	posCube->AttachTo(parent);
+	posCube->SetupAttachment(parent);
 
 	negCube = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("negCube"));
-	negCube->AttachTo(parent);
+	negCube->SetupAttachment(parent);
 
 	//MyTarget = CreateDefaultSubobject<UMoveMarker>(TEXT("Target"));
 }
 
 void ASlideCube::Shift()
 {
-	disable(posCube);
-	disable(negCube);
+	Disable(posCube);
+	Disable(negCube);
 	isPositve = !isPositve;
 	return;
 }
@@ -29,25 +29,35 @@ void ASlideCube::WorldStateChange(bool worldState)
 {
 	if (worldState)
 		if (isPositve)
-			enable(posCube);
+			Enable(posCube);
 		else
-			disable(negCube);
+			Disable(negCube);
 	else
 		if (isPositve)
-			disable(posCube);
+			Disable(posCube);
 		else
-			enable(negCube);
+			Enable(negCube);
 }
 
-void ASlideCube::disable(UStaticMeshComponent* mesh)
+void ASlideCube::BeginPlay()
 {
-	mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	mesh->SetVisibility(false);
+	Super::BeginPlay();
+
+	if (!PositiveState) Shift(); 
+	else Disable(negCube);
 }
 
-void ASlideCube::enable(UStaticMeshComponent* mesh)
+bool ASlideCube::Disable(USceneComponent* mesh)
 {
-	mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	mesh->SetVisibility(true);
+	CastChecked<UStaticMeshComponent>(mesh)->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	CastChecked<UStaticMeshComponent>(mesh)->SetVisibility(false);
+	return true;
+}
+
+bool ASlideCube::Enable(USceneComponent* mesh)
+{
+	CastChecked<UStaticMeshComponent>(mesh)->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	CastChecked<UStaticMeshComponent>(mesh)->SetVisibility(true);
+	return true;
 }
 
