@@ -16,7 +16,7 @@ AMasterShifter::AMasterShifter()
 	CollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
 	CollisionComp->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
 	//CollisionComp->OnComponentHit.AddDynamic(this, &AMasterShifter::OnCompHit);
-	CollisionComp->SetBoxExtent(FVector(1.0f, 1.0f, 1.0f));
+	CollisionComp->SetBoxExtent(FVector(60.0f, 60.0f, 60.0f));
 	RootComponent = CollisionComp;
 
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
@@ -28,9 +28,9 @@ AMasterShifter::AMasterShifter()
 	PostProcessComp->SetupAttachment(CollisionComp);
 	PostProcessComp->bUnbound = true;
 
-	RotatingMovementComp = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("RotatingMovement"));
-	RotatingMovementComp->SetUpdatedComponent(CollisionComp);
-	RotatingMovementComp->RotationRate = FRotator(45.0f, 90.0f, 90.0f);
+	//RotatingMovementComp = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("RotatingMovement"));
+	//RotatingMovementComp->SetUpdatedComponent(CollisionComp);
+	//RotatingMovementComp->RotationRate = FRotator(45.0f, 90.0f, 90.0f);
 
 	DynamicMat = nullptr;
 	DynamicPPMat = nullptr;
@@ -44,48 +44,8 @@ AMasterShifter::AMasterShifter()
 //	}
 //}
 
-void AMasterShifter::Shift()
+void AMasterShifter::ShiftCoreMaterial(const FLinearColor& Black, const FLinearColor& White)
 {
-	// Get post process material
-	if (!DynamicPPMat)
-	{
-		UMaterialInterface* Material = Cast<UMaterialInterface>(PostProcessComp->Settings.WeightedBlendables.Array[0].Object);
-		// Make new Dynamic Material instance for Post Process material
-		if (Material)
-			DynamicPPMat = UMaterialInstanceDynamic::Create(Material, this);
-
-		FWeightedBlendable newWeightedBlendable;
-		newWeightedBlendable.Object = DynamicPPMat;
-		newWeightedBlendable.Weight = 1;
-
-		PostProcessComp->Settings.WeightedBlendables.Array.Add(newWeightedBlendable);
-	}
-
-	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
-	const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
-
-	FLinearColor faceColor;
-	DynamicPPMat->GetVectorParameterValue(TEXT("Face Color"), faceColor);
-	FLinearColor lineColor;
-	DynamicPPMat->GetVectorParameterValue(TEXT("Line Color"), lineColor);
-
-	// if face is white and line is black
-	if (faceColor.R > 0.5f && lineColor.R < 0.5f)
-	{
-		// Change face to Black
-		DynamicPPMat->SetVectorParameterValue(TEXT("Face Color"), Black);
-		// Change Line to White
-		DynamicPPMat->SetVectorParameterValue(TEXT("Line Color"), White);
-	}
-	else
-	{
-		// Change face to White
-		DynamicPPMat->SetVectorParameterValue(TEXT("Face Color"), White);
-		// Change Line to Black
-		DynamicPPMat->SetVectorParameterValue(TEXT("Line Color"), Black);
-	}
-	
-
 	// Get Material for Orb in Mesh
 	if (!DynamicMat)
 	{
@@ -116,22 +76,70 @@ void AMasterShifter::Shift()
 
 		PositiveState = false;
 	}
+}
+
+void AMasterShifter::ShiftPostProcessMaterial(const FLinearColor& Black, const FLinearColor& White)
+{
+	// Get post process material
+	if (!DynamicPPMat)
+	{
+		UMaterialInterface* Material = Cast<UMaterialInterface>(PostProcessComp->Settings.WeightedBlendables.Array[0].Object);
+		// Make new Dynamic Material instance for Post Process material
+		if (Material)
+			DynamicPPMat = UMaterialInstanceDynamic::Create(Material, this);
+
+		FWeightedBlendable newWeightedBlendable;
+		newWeightedBlendable.Object = DynamicPPMat;
+		newWeightedBlendable.Weight = 1;
+
+		PostProcessComp->Settings.WeightedBlendables.Array.Add(newWeightedBlendable);
+	}
+
+	FLinearColor faceColor;
+	DynamicPPMat->GetVectorParameterValue(TEXT("Face Color"), faceColor);
+	FLinearColor lineColor;
+	DynamicPPMat->GetVectorParameterValue(TEXT("Line Color"), lineColor);
+
+	// if face is white and line is black
+	if (faceColor.R > 0.5f && lineColor.R < 0.5f)
+	{
+		// Change face to Black
+		DynamicPPMat->SetVectorParameterValue(TEXT("Face Color"), Black);
+		// Change Line to White
+		DynamicPPMat->SetVectorParameterValue(TEXT("Line Color"), White);
+	}
+	else
+	{
+		// Change face to White
+		DynamicPPMat->SetVectorParameterValue(TEXT("Face Color"), White);
+		// Change Line to Black
+		DynamicPPMat->SetVectorParameterValue(TEXT("Line Color"), Black);
+	}
+}
+
+void AMasterShifter::Shift()
+{
+	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
+	const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
+
+	ShiftPostProcessMaterial(Black, White);
+
+	ShiftCoreMaterial(Black, White);
 
 	TArray<AActor*> Shiftables;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShiftable::StaticClass(), Shiftables);
 	for (AActor* actor : Shiftables)
 	{
-		// If shiftable is in Positive/Negative state disable it
-		// then shift any shiftables that are in same state as master shifter 
 		AShiftable* shiftable = Cast<AShiftable>(actor);
 		shiftable->WorldStateChange(PositiveState);
 	}
-	
 }
 
 void AMasterShifter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PrimaryActorTick.bCanEverTick = true;
 
 	if (!PositiveState) Shift();
 }
@@ -140,5 +148,5 @@ void AMasterShifter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//AddActorLocalRotation(FRotator(45.0f, 90.0f, 90.0f) * DeltaTime);
+	//AddActorLocalRotation(FRotator(45.0f, 90.0f, 90.0f).Quaternion() * DeltaTime);
 }

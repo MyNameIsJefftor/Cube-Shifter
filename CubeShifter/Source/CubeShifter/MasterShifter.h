@@ -28,8 +28,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Post Process")
 	UPostProcessComponent* PostProcessComp;
 
-	UPROPERTY(EditAnywhere, Category = "Rotating Movement")
-	URotatingMovementComponent* RotatingMovementComp;
+	//UPROPERTY(EditAnywhere, Category = "Rotating Movement")
+	//URotatingMovementComponent* RotatingMovementComp;
 
 	//UFUNCTION()
 	//void OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -45,5 +45,9 @@ private:
 	//UMaterialInterface* Material;
 	UMaterialInstanceDynamic* DynamicPPMat;
 	UMaterialInstanceDynamic* DynamicMat;
+
+	void ShiftPostProcessMaterial(const FLinearColor& Black, const FLinearColor& White);
+
+	void ShiftCoreMaterial(const FLinearColor& Black, const FLinearColor& White);
 
 };
