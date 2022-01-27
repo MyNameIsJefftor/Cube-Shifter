@@ -6,7 +6,10 @@ kanban-plugin: basic
 
 ## Todo
 
-- [ ] - [ ] Make more shiftable objects
+- [ ] - [ ] Make more shiftable objects<br>#HIGHPriority
+- [ ] - [ ] Buttons<br>	- Can interact non shiftables maybe
+- [ ] - [ ] Doors
+- [ ] - [ ] Switches<br>	- Can interact non shiftables maybe
 
 
 ## Completed
@@ -17,6 +20,14 @@ kanban-plugin: basic
 - [ ] - [x] Implement Reality Shifting<br>	- [[Game Rules]]<br>#HIGHPriority
 - [ ] - [x] Warping effect when an object shift realities
 - [ ] - [x] Projectile Changes Color Based on world
+- [ ] - [x] Shift/Slide Cubes
+
+
+## Interactables
+
+- [ ] - [ ] Moving Platforms
+- [ ] - [ ] Bridges<br>	- Positive/Negative World: Goes North/South<br>	- Negative/Positive World: Goes East/West
+- [ ] - [ ] Slippery Slope
 
 
 ## Audio
@@ -30,15 +41,6 @@ kanban-plugin: basic
 
 - [ ] - [ ] Wave effect when player shifts
 - [ ] - [ ] "Ghost" of object in opposite realm
-
-
-## Interactables
-
-- [ ] Buttons
-- [ ] Doors
-- [ ] Switches
-- [ ] Shift Cubes
-- [ ] Basic Cube
 
 
 ## UI
