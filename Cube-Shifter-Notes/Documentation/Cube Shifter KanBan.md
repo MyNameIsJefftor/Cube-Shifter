@@ -15,6 +15,8 @@ kanban-plugin: basic
 - [ ] - [x] Make master shifter only shift with contact orbs (i.e. making it a shiftable)
 - [ ] - [x] change master shifter to new mesh
 - [ ] - [x] Implement Reality Shifting<br>	- [[Game Rules]]<br>#HIGHPriority
+- [ ] - [x] Warping effect when an object shift realities
+- [ ] - [x] Projectile Changes Color Based on world
 
 
 ## Audio
@@ -26,10 +28,8 @@ kanban-plugin: basic
 
 ## VFX
 
-- [ ] - [ ] Warping effect when an object shift realities
 - [ ] - [ ] Wave effect when player shifts
 - [ ] - [ ] "Ghost" of object in opposite realm
-- [ ] - [ ] Projectile Changes Color Based on world
 
 
 ## Interactables
