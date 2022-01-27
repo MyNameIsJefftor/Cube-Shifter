@@ -7,7 +7,6 @@ kanban-plugin: basic
 ## Todo
 
 - [ ] - [ ] Make more shiftable objects
-- [ ] - [ ] Add Blockout tools plugin maybe
 
 
 ## Completed
