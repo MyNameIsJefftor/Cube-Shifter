@@ -22,6 +22,12 @@ class ACubeShifterProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+	UPROPERTY(EditAnywhere, Category = "Static Mesh")
+	UStaticMeshComponent* MeshComp;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Particle System")
+	UParticleSystem* WarpEffect;
+
 public:
 	ACubeShifterProjectile();
 
@@ -33,5 +39,13 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+	UMaterialInstanceDynamic* DynamicMat;
+
+	void ShiftMaterial();
 };
 
