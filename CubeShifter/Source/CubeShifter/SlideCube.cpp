@@ -21,19 +21,19 @@ void ASlideCube::Shift()
 {
 	Disable(posCube);
 	Disable(negCube);
-	isPositve = !isPositve;
+	PositiveState = !PositiveState;
 	return;
 }
 
 void ASlideCube::WorldStateChange(bool worldState)
 {
 	if (worldState)
-		if (isPositve)
+		if (PositiveState)
 			Enable(posCube);
 		else
 			Disable(negCube);
 	else
-		if (isPositve)
+		if (PositiveState)
 			Disable(posCube);
 		else
 			Enable(negCube);

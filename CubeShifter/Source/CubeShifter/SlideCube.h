@@ -29,8 +29,6 @@ class CUBESHIFTER_API ASlideCube : public AShiftable
 
 	FVector Start;
 
-	bool isPositve = true;
-
 	ASlideCube();
 
 	void Shift() override;
