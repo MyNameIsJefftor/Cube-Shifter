@@ -58,9 +58,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ACubeShifterProjectile> ProjectileClass;
 
-	//UPROPERTY(EditDefaultsOnly, Category = Projectile)
-	//	TSubclassOf<class ACubeShifterProjectile> AltProjectileClass;
-
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		USoundBase* FireSound;
@@ -95,19 +92,6 @@ protected:
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void LookUpAtRate(float Rate);
-
-	//struct TouchData
-	//{
-	//	TouchData() { bIsPressed = false; Location = FVector::ZeroVector; }
-	//	bool bIsPressed;
-	//	ETouchIndex::Type FingerIndex;
-	//	FVector Location;
-	//	bool bMoved;
-	//};
-	//void BeginTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
-	//void EndTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
-	//void TouchUpdate(const ETouchIndex::Type FingerIndex, const FVector Location);
-	//TouchData	TouchItem;
 
 protected:
 	// APawn interface
