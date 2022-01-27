@@ -6,7 +6,6 @@ kanban-plugin: basic
 
 ## Todo
 
-- [ ] - [ ] Implement Reality Shifting<br>	- [[Game Rules]]<br>#HIGHPriority
 - [ ] - [ ] Make more shiftable objects
 - [ ] - [ ] Add Blockout tools plugin maybe
 
@@ -16,6 +15,7 @@ kanban-plugin: basic
 - [ ] - [x] invert master shifter when in opposite world
 - [ ] - [x] Make master shifter only shift with contact orbs (i.e. making it a shiftable)
 - [ ] - [x] change master shifter to new mesh
+- [ ] - [x] Implement Reality Shifting<br>	- [[Game Rules]]<br>#HIGHPriority
 
 
 ## Audio
