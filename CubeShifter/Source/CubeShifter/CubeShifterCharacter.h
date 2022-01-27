@@ -12,6 +12,7 @@ class USceneComponent;
 class UCameraComponent;
 class UAnimMontage;
 class USoundBase;
+class UCharacterMovementComponent;
 
 UCLASS(config = Game)
 class ACubeShifterCharacter : public ACharacter
@@ -57,8 +58,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ACubeShifterProjectile> ProjectileClass;
 
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-		TSubclassOf<class ACubeShifterProjectile> AltProjectileClass;
+	//UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	//	TSubclassOf<class ACubeShifterProjectile> AltProjectileClass;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
@@ -68,11 +69,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		UAnimMontage* FireAnimation;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = TerrainEffects)
+		bool OnSlippery;
+
 protected:
 
 	/** Fires a projectile. */
 	void OnFire();
-	void OnAltFire();
+	//void OnAltFire();
 
 	/** Handles moving forward/backward */
 	void MoveForward(float Val);
@@ -117,6 +121,9 @@ public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+
+	UFUNCTION(BlueprintCallable)
+		void SlipperyFloor(bool SetSlippery);
 
 };
 
