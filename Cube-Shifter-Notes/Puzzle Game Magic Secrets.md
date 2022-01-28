@@ -1,3 +1,5 @@
+# [Puzzle Game Magic Secrets GDC](https://youtu.be/B36_OL1ZXVM)
+
 ## Working Memory
 - Human RAM
 	- Frees up with experience
