@@ -30,6 +30,9 @@ public:
 	// Sets default values for this actor's properties
 	ALevelDoor();
 
+	bool OpenDoor();
+	bool CloseDoor();
+
 	// implement Interactable Interface
 	virtual bool TurnOn() override;
 	virtual bool TurnOff() override;
@@ -37,8 +40,5 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 };
