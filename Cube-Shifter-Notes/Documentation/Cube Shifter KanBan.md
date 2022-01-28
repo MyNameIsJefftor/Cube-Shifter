@@ -7,9 +7,7 @@ kanban-plugin: basic
 ## Todo
 
 - [ ] - [ ] Make more shiftable objects<br>#HIGHPriority
-- [ ] - [ ] Buttons<br>	- Can interact non shiftables maybe
-- [ ] - [ ] Doors
-- [ ] - [ ] Switches<br>	- Can interact non shiftables maybe
+- [ ] - [ ] Slippery Slope
 
 
 ## Completed
@@ -21,13 +19,15 @@ kanban-plugin: basic
 - [ ] - [x] Warping effect when an object shift realities
 - [ ] - [x] Projectile Changes Color Based on world
 - [ ] - [x] Shift/Slide Cubes
+- [ ] - [x] Buttons<br>	- Can interact non shiftables maybe
+- [ ] - [x] Switches<br>	- Can interact non shiftables maybe
+- [ ] - [x] Doors
 
 
 ## Interactables
 
 - [ ] - [ ] Moving Platforms
 - [ ] - [ ] Bridges<br>	- Positive/Negative World: Goes North/South<br>	- Negative/Positive World: Goes East/West
-- [ ] - [ ] Slippery Slope
 
 
 ## Audio
