@@ -8,6 +8,8 @@ kanban-plugin: basic
 
 - [ ] - [ ] Make more shiftable objects<br>#HIGHPriority
 - [ ] - [ ] Slippery Slope
+- [ ] - [ ] Main menu
+- [ ] - [ ] Change Hud (Crosshair)
 
 
 ## Completed
@@ -22,6 +24,7 @@ kanban-plugin: basic
 - [ ] - [x] Buttons<br>	- Can interact non shiftables maybe
 - [ ] - [x] Switches<br>	- Can interact non shiftables maybe
 - [ ] - [x] Doors
+- [ ] - [x] "press E to interact"
 
 
 ## Interactables
@@ -45,7 +48,6 @@ kanban-plugin: basic
 
 ## UI
 
-- [ ] - [ ] Main menu
 
 
 ## Visuals
