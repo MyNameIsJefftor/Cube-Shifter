@@ -8,7 +8,7 @@ kanban-plugin: basic
 
 - [ ] - [ ] Make more shiftable objects<br>#HIGHPriority
 - [ ] - [ ] Slippery Slope
-- [ ] - [ ] Main menu
+- [ ] - [ ] Pause Menu
 - [ ] - [ ] Change Hud (Crosshair)
 
 
@@ -25,6 +25,8 @@ kanban-plugin: basic
 - [ ] - [x] Switches<br>	- Can interact non shiftables maybe
 - [ ] - [x] Doors
 - [ ] - [x] "press E to interact"
+- [ ] - [x] Controls Menu
+- [ ] - [x] Main menu
 
 
 ## Interactables
@@ -48,6 +50,7 @@ kanban-plugin: basic
 
 ## UI
 
+- [ ] - [ ] Options<br>	- Maybe Options to change the post process colors<br>	- Audio Settings<br>	- Controls Setting
 
 
 ## Visuals
