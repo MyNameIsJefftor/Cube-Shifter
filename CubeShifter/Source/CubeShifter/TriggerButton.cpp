@@ -10,17 +10,20 @@ ATriggerButton::ATriggerButton()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	Parent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	if (!Parent)
+		Parent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	RootComponent = Parent;
 
-	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Comp"));
+	if (!CollisionComp)
+		CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Comp"));
 	CollisionComp->SetupAttachment(RootComponent);
 	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ATriggerButton::OnComponentBeginOverlap);
 	CollisionComp->OnComponentEndOverlap.AddDynamic(this, &ATriggerButton::OnComponentEndOverlap);
 
-	ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Button"));
+	if (!ButtonMesh)
+		ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Button"));
 	ButtonMesh->SetupAttachment(CollisionComp);
+	ButtonMesh->bRenderCustomDepth = true;
 }
 
 void ATriggerButton::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -55,12 +58,5 @@ void ATriggerButton::BeginPlay()
 	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &ATriggerButton::OnComponentBeginOverlap);
 	CollisionComp->OnComponentEndOverlap.AddDynamic(this, &ATriggerButton::OnComponentEndOverlap);
 	
-}
-
-// Called every frame
-void ATriggerButton::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 

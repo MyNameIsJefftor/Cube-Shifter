@@ -10,21 +10,30 @@ ALevelDoor::ALevelDoor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	Parent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	if (!Parent)
+		Parent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	RootComponent = Parent;
 
-	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door"));
+	if (!DoorMesh)
+		DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door"));
 	DoorMesh->SetupAttachment(RootComponent);
+	DoorMesh->BodyInstance.SetCollisionProfileName("NoCollision");
+	DoorMesh->bRenderCustomDepth = true;
 
-	CollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
+	if (!CollisionComp)
+		CollisionComp = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
 	CollisionComp->SetupAttachment(DoorMesh);
+	CollisionComp->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
 
-	DoorFrameMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Frame"));
+	if (!DoorFrameMesh)
+		DoorFrameMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Frame"));
 	DoorFrameMesh->SetupAttachment(RootComponent);
+	DoorFrameMesh->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
+	DoorFrameMesh->bRenderCustomDepth = true;
 
 }
 
-bool ALevelDoor::TurnOn()
+bool ALevelDoor::OpenDoor()
 {
 	const FRotator rot(0.0f, -90.0f, 0.0f);
 	DoorMesh->SetRelativeRotation(rot.Quaternion());
@@ -32,7 +41,7 @@ bool ALevelDoor::TurnOn()
 	return (DoorMesh->GetRelativeRotation() == rot);
 }
 
-bool ALevelDoor::TurnOff()
+bool ALevelDoor::CloseDoor()
 {
 	const FRotator rot(0.0f, 0.0f, 0.0f);
 	DoorMesh->SetRelativeRotation(rot.Quaternion());
@@ -40,17 +49,20 @@ bool ALevelDoor::TurnOff()
 	return (DoorMesh->GetRelativeRotation() == rot);
 }
 
+bool ALevelDoor::TurnOn()
+{
+	return OpenDoor();
+}
+
+bool ALevelDoor::TurnOff()
+{
+	return CloseDoor();
+}
+
 // Called when the game starts or when spawned
 void ALevelDoor::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-// Called every frame
-void ALevelDoor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
