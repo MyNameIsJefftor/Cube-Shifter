@@ -30,7 +30,7 @@ AMasterShifter::AMasterShifter()
 
 	BoxTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxTrigger"));
 	BoxTrigger->SetupAttachment(RootComponent);
-	BoxTrigger->BodyInstance.SetCollisionProfileName("OverlapOnlyPawn");
+	BoxTrigger->BodyInstance.SetCollisionProfileName("Trigger");
 	BoxTrigger->OnComponentBeginOverlap.AddDynamic(this, &AMasterShifter::OnComponentBeginOverlap);
 	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AMasterShifter::OnComponentEndOverlap);
 
