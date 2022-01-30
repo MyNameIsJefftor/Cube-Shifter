@@ -45,10 +45,10 @@ protected:
 
 private:
 	UMaterialInstanceDynamic* DynamicPPMat;
-	UMaterialInstanceDynamic* DynamicMat;
+	UMaterialInstanceDynamic* DynamicMat[2];
 
-	void ShiftPostProcessMaterial(const FLinearColor& Black, const FLinearColor& White);
+	void ShiftPostProcessMaterial();
 
-	void ShiftCoreMaterial(const FLinearColor& Black, const FLinearColor& White);
+	void ShiftCoreMaterial(int32 Index);
 
 };

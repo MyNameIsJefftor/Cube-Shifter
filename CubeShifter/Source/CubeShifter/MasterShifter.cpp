@@ -34,45 +34,48 @@ AMasterShifter::AMasterShifter()
 	BoxTrigger->OnComponentBeginOverlap.AddDynamic(this, &AMasterShifter::OnComponentBeginOverlap);
 	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AMasterShifter::OnComponentEndOverlap);
 
-	DynamicMat = nullptr;
+	DynamicMat[0] = DynamicMat[1] = nullptr;
 	DynamicPPMat = nullptr;
 }
 
-void AMasterShifter::ShiftCoreMaterial(const FLinearColor& Black, const FLinearColor& White)
+void AMasterShifter::ShiftCoreMaterial(int32 Index)
 {
 	// Get Material for Orb in Mesh
-	if (!DynamicMat)
+	if (!DynamicMat[Index])
 	{
 		// Make new Dynamic Material instance for Core material
-		if (UMaterialInterface* Material = MeshComp->GetMaterial(1))
+		if (UMaterialInterface* Material = MeshComp->GetMaterial(Index))
 		{
-			DynamicMat = UMaterialInstanceDynamic::Create(Material, this);
+			DynamicMat[Index] = UMaterialInstanceDynamic::Create(Material, this);
 
-			MeshComp->SetMaterial(1, DynamicMat);
+			MeshComp->SetMaterial(Index, DynamicMat[Index]);
 		}
 	}
 
 	FLinearColor coreColor;
-	DynamicMat->GetVectorParameterValue(TEXT("EmissiveColor"), coreColor);
+	DynamicMat[Index]->GetVectorParameterValue(TEXT("EmissiveColor"), coreColor);
+
+	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
+	const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
 
 	// if face is white
 	if (coreColor.R > 0.5f)
 	{
 		// Change face to Black
-		DynamicMat->SetVectorParameterValue(TEXT("EmissiveColor"), Black);
+		DynamicMat[Index]->SetVectorParameterValue(TEXT("EmissiveColor"), Black);
 
 		PositiveState = true;
 	}
 	else
 	{
 		// Change face to White
-		DynamicMat->SetVectorParameterValue(TEXT("EmissiveColor"), White);
+		DynamicMat[Index]->SetVectorParameterValue(TEXT("EmissiveColor"), White);
 
 		PositiveState = false;
 	}
 }
 
-void AMasterShifter::ShiftPostProcessMaterial(const FLinearColor& Black, const FLinearColor& White)
+void AMasterShifter::ShiftPostProcessMaterial()
 {
 	// Get post process material
 	if (!DynamicPPMat)
@@ -93,6 +96,9 @@ void AMasterShifter::ShiftPostProcessMaterial(const FLinearColor& Black, const F
 	DynamicPPMat->GetVectorParameterValue(TEXT("Face Color"), faceColor);
 	FLinearColor lineColor;
 	DynamicPPMat->GetVectorParameterValue(TEXT("Line Color"), lineColor);
+
+	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
+	const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
 
 	// if face is white and line is black
 	if (faceColor.R > 0.5f && lineColor.R < 0.5f)
@@ -129,12 +135,10 @@ void AMasterShifter::OnComponentEndOverlap(UPrimitiveComponent* OverlappedCompon
 
 void AMasterShifter::Shift()
 {
-	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
-	const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
+	ShiftPostProcessMaterial();
 
-	ShiftPostProcessMaterial(Black, White);
-
-	ShiftCoreMaterial(Black, White);
+	ShiftCoreMaterial(0);
+	ShiftCoreMaterial(1);
 
 	TArray<AActor*> Shiftables;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShiftable::StaticClass(), Shiftables);

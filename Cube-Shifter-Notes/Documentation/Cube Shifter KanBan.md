@@ -10,11 +10,13 @@ kanban-plugin: basic
 - [ ] - [ ] Slippery Slope
 - [ ] - [ ] Pause Menu
 - [ ] - [ ] Change Hud (Crosshair)
-- [ ] - [ ] find solution for multiple master shifters
+- [ ] - [ ] Bridges (Can use SlideCubes)<br>	- Positive/Negative World: Goes North/South<br>	- Negative/Positive World: Goes East/West
+- [ ] - [ ] Fix problem with player spawn Main menu to game level
 
 
 ## Completed
 
+- [ ] - [x] find solution for multiple master shifters
 - [ ] - [x] invert master shifter when in opposite world
 - [ ] - [x] Make master shifter only shift with contact orbs (i.e. making it a shiftable)
 - [ ] - [x] change master shifter to new mesh
@@ -33,7 +35,6 @@ kanban-plugin: basic
 ## Interactables
 
 - [ ] - [ ] Moving Platforms
-- [ ] - [ ] Bridges<br>	- Positive/Negative World: Goes North/South<br>	- Negative/Positive World: Goes East/West
 
 
 ## Audio
