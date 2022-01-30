@@ -50,7 +50,7 @@ void ACubeShifterProjectile::BeginPlay()
 	TArray<AActor*> MasterShifters;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMasterShifter::StaticClass(), MasterShifters);
 
-	if (MasterShifters[0] && !Cast<AMasterShifter>(MasterShifters[0])->GetPositiveState()) 
+	if (MasterShifters.Num() > 0 && MasterShifters[0] && !Cast<AMasterShifter>(MasterShifters[0])->GetPositiveState()) 
 		ShiftMaterial();
 }
 
