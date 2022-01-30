@@ -10,6 +10,7 @@ kanban-plugin: basic
 - [ ] - [ ] Slippery Slope
 - [ ] - [ ] Pause Menu
 - [ ] - [ ] Change Hud (Crosshair)
+- [ ] - [ ] find solution for multiple master shifters
 
 
 ## Completed
