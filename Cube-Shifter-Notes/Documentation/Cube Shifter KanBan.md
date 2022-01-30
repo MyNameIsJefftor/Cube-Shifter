@@ -11,12 +11,12 @@ kanban-plugin: basic
 - [ ] - [ ] Pause Menu
 - [ ] - [ ] Change Hud (Crosshair)
 - [ ] - [ ] Bridges (Can use SlideCubes)<br>	- Positive/Negative World: Goes North/South<br>	- Negative/Positive World: Goes East/West
-- [ ] - [ ] Fix problem with player spawn Main menu to game level
 - [ ] - [ ] change Button and Switch materials
 
 
 ## Completed
 
+- [ ] - [x] Fix problem with player spawn Main menu to game level
 - [ ] - [x] find solution for multiple master shifters
 - [ ] - [x] invert master shifter when in opposite world
 - [ ] - [x] Make master shifter only shift with contact orbs (i.e. making it a shiftable)
