@@ -28,21 +28,15 @@ AMasterShifter::AMasterShifter()
 	PostProcessComp->SetupAttachment(CollisionComp);
 	PostProcessComp->bUnbound = true;
 
-	//RotatingMovementComp = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("RotatingMovement"));
-	//RotatingMovementComp->SetUpdatedComponent(CollisionComp);
-	//RotatingMovementComp->RotationRate = FRotator(45.0f, 90.0f, 90.0f);
+	BoxTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxTrigger"));
+	BoxTrigger->SetupAttachment(RootComponent);
+	BoxTrigger->BodyInstance.SetCollisionProfileName("OverlapOnlyPawn");
+	BoxTrigger->OnComponentBeginOverlap.AddDynamic(this, &AMasterShifter::OnComponentBeginOverlap);
+	BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AMasterShifter::OnComponentEndOverlap);
 
 	DynamicMat = nullptr;
 	DynamicPPMat = nullptr;
 }
-
-//void AMasterShifter::OnCompHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-//{
-//	if (false/*(OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics()*/)
-//	{
-//
-//	}
-//}
 
 void AMasterShifter::ShiftCoreMaterial(const FLinearColor& Black, const FLinearColor& White)
 {
@@ -117,6 +111,22 @@ void AMasterShifter::ShiftPostProcessMaterial(const FLinearColor& Black, const F
 	}
 }
 
+void AMasterShifter::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+		PostProcessComp->Priority = 1.0f;
+	}
+}
+
+void AMasterShifter::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+		PostProcessComp->Priority = 0.0f;
+	}
+}
+
 void AMasterShifter::Shift()
 {
 	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
@@ -139,7 +149,11 @@ void AMasterShifter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PrimaryActorTick.bCanEverTick = true;
+	if (BoxTrigger)
+	{
+		BoxTrigger->OnComponentBeginOverlap.AddDynamic(this, &AMasterShifter::OnComponentBeginOverlap);
+		BoxTrigger->OnComponentEndOverlap.AddDynamic(this, &AMasterShifter::OnComponentEndOverlap);
+	}
 
 	if (!PositiveState) Shift();
 }
