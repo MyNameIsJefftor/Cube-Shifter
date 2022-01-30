@@ -38,6 +38,8 @@ public:
 
 	virtual void Shift() override;
 
+	virtual void WorldStateChange(bool WorldState) override;
+
 protected:
 	virtual void BeginPlay() override;
 

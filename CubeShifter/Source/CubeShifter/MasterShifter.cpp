@@ -58,20 +58,19 @@ void AMasterShifter::ShiftCoreMaterial(int32 Index)
 	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
 	const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
 
+	////Check Positive State
+	//if(PositiveState)
+	
 	// if face is white
 	if (coreColor.R > 0.5f)
 	{
 		// Change face to Black
 		DynamicMat[Index]->SetVectorParameterValue(TEXT("EmissiveColor"), Black);
-
-		PositiveState = true;
 	}
 	else
 	{
 		// Change face to White
 		DynamicMat[Index]->SetVectorParameterValue(TEXT("EmissiveColor"), White);
-
-		PositiveState = false;
 	}
 }
 
@@ -99,7 +98,9 @@ void AMasterShifter::ShiftPostProcessMaterial()
 
 	const FLinearColor White(0.875f, 0.875f, 0.875f, 1.0f);
 	const FLinearColor Black(0.04f, 0.04f, 0.04f, 1.0f);
-
+	////Check Positive State
+	//if(PositiveState)
+	
 	// if face is white and line is black
 	if (faceColor.R > 0.5f && lineColor.R < 0.5f)
 	{
@@ -135,10 +136,12 @@ void AMasterShifter::OnComponentEndOverlap(UPrimitiveComponent* OverlappedCompon
 
 void AMasterShifter::Shift()
 {
-	ShiftPostProcessMaterial();
+	PositiveState = !PositiveState;
 
-	ShiftCoreMaterial(0);
-	ShiftCoreMaterial(1);
+	//ShiftPostProcessMaterial();
+
+	//ShiftCoreMaterial(0);
+	//ShiftCoreMaterial(1);
 
 	TArray<AActor*> Shiftables;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShiftable::StaticClass(), Shiftables);
@@ -147,6 +150,16 @@ void AMasterShifter::Shift()
 		AShiftable* shiftable = Cast<AShiftable>(actor);
 		shiftable->WorldStateChange(PositiveState);
 	}
+}
+
+void AMasterShifter::WorldStateChange(bool WorldState)
+{
+	PositiveState = WorldState;
+
+	ShiftPostProcessMaterial();
+
+	ShiftCoreMaterial(0);
+	ShiftCoreMaterial(1);
 }
 
 void AMasterShifter::BeginPlay()
