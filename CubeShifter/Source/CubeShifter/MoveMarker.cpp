@@ -10,7 +10,7 @@ UMoveMarker::UMoveMarker()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	MyBill = CreateDefaultSubobject<UBillboardComponent>("Billboard");
-	MyBill->AttachTo(this);
+	MyBill->SetupAttachment(this);
 	// ...
 }
 
